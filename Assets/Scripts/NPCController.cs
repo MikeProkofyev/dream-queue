@@ -4,48 +4,50 @@ using System.Collections;
 public class NPCController : MonoBehaviour {
 
 	bool excited = false;
-	bool dead = false;
 	public float health = 100f;
 	Wander wanderController;
+	Rigidbody rb;
+	NavMeshAgent navAgent;
+	bool jumping = false;
 
 
 	void Awake () {
 		wanderController = GetComponent<Wander> ();
+		rb = GetComponent<Rigidbody>();
+		navAgent = GetComponent<NavMeshAgent>();
 	}
 
 	// Use this for initialization
 	void Start () {
-		EnableRagdoll(false);	 
 	}
 
 	
 	// Update is called once per frame
 	void Update () {
-		if (health <= 0 && !dead) {
+		if (health <= 0) {
 			Die();
 		}
-	}
 
-	void EnableRagdoll (bool enableRagdoll) {
-		Collider[] colChildren =  gameObject.GetComponentsInChildren< Collider >();
-		for (int colIdx = 0; colIdx < colChildren.Length; colIdx++) {
-			if ( colChildren[colIdx].gameObject != gameObject ) {
-				colChildren[colIdx].enabled = enableRagdoll;
-			}
+		if (jumping) {
+//			navAgent.enabled = true;
+			jumping = false;
+		}
+
+		if (Input.GetButtonDown("Jump")) {
+			Debug.Log ("Jumping" + transform.up);
+			jumping = true;
+			navAgent.enabled = false;
+			wanderController.enabled = false;	
+//			navAgent.Stop(true);
+			rb.AddForce(transform.TransformDirection(transform.up) * 10, ForceMode.Impulse);
+
 		}
 	}
+	
 
 	void Die () {
-		GetComponent<CapsuleCollider>().enabled = false;
-		GetComponent<Animator>().enabled = false;
-		GetComponent<NavMeshAgent>().enabled = false;
-		MonoBehaviour[] comps = GetComponents<MonoBehaviour>();
-		foreach(MonoBehaviour c in comps)
-		{
-			c.enabled = false;
-		}
-		EnableRagdoll(true);
-		dead = true;
+		Destroy(gameObject);
+		//Spawn some particles
 	}
 
 	void RecieveDamage (float damage) {
@@ -53,6 +55,13 @@ public class NPCController : MonoBehaviour {
 		if (!excited) {
 			GetExcited();
 			ExciteNearby();	
+		}
+	}
+
+	void OnCollisionEnter(Collision other) {
+		if (rb.velocity.y == 0) {
+			navAgent.enabled = true;
+			wanderController.enabled = true;	
 		}
 	}
 
@@ -72,7 +81,7 @@ public class NPCController : MonoBehaviour {
 			float npcDistance = Vector3.Distance(transform.position, npcPosition);
 			bool nearbyNPC = npcDistance < radius && npcDistance != 0;
 			if (nearbyNPC) {
-				NPCs[npcIdx].SendMessage("GetExcited",  SendMessageOptions.DontRequireReceiver);
+				NPCs[npcIdx].GetComponent<NPCController>().GetExcited();
 			}
 
 		}
