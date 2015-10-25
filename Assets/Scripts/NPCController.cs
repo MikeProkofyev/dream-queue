@@ -1,14 +1,15 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class NPCController : MonoBehaviour {
 
 	bool excited = false;
+	bool jumping = false;
 	public float health = 100f;
+	float nextJumpTime = 0;
 	Wander wanderController;
 	Rigidbody rb;
 	NavMeshAgent navAgent;
-	bool jumping = false;
 
 
 	void Awake () {
@@ -19,6 +20,7 @@ public class NPCController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+//		rb.detectCollisions = false;  //Uncomment, if interferes with navMeshAgent
 	}
 
 	
@@ -27,21 +29,30 @@ public class NPCController : MonoBehaviour {
 		if (health <= 0) {
 			Die();
 		}
+		
+		//		UpdateJumping();  //Sometimes mesh dissapears, and navAgent stops for no reason.
+	}
 
-		if (jumping) {
-//			navAgent.enabled = true;
-			jumping = false;
-		}
-
-		if (Input.GetButtonDown("Jump")) {
-			Debug.Log ("Jumping" + transform.up);
+	void UpdateJumping () {
+		nextJumpTime -= Time.deltaTime;
+		bool canJump = !jumping && nextJumpTime <= 0;//Input.GetButtonDown("Fire2")
+		if (canJump) {
+			nextJumpTime = Random.Range(3f, 6f);
 			jumping = true;
+			//			navAgent.Stop (true);
 			navAgent.enabled = false;
 			wanderController.enabled = false;	
-//			navAgent.Stop(true);
-			rb.AddForce(transform.TransformDirection(transform.up) * 10, ForceMode.Impulse);
-
+			rb.AddRelativeForce(transform.TransformDirection(transform.up + transform.forward) * 120, ForceMode.Impulse);
+			Invoke("TurnOnWalkSystems", 0.8f);
+			
 		}
+	}
+
+	void TurnOnWalkSystems() {
+//		navAgent.Resume();
+		navAgent.enabled = true;
+		wanderController.enabled = true;	
+		jumping = false;
 	}
 	
 
@@ -59,10 +70,9 @@ public class NPCController : MonoBehaviour {
 	}
 
 	void OnCollisionEnter(Collision other) {
-		if (rb.velocity.y == 0) {
-			navAgent.enabled = true;
-			wanderController.enabled = true;	
-		}
+//		if (rb.velocity.y == 0) {
+//
+//		}
 	}
 
 

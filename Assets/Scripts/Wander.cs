@@ -50,7 +50,7 @@ public class Wander : MonoBehaviour {
 	void NewHeadingRoutine () {
 		nextYRotation =  Random.Range(nextYRotation - maxHeadingChange, nextYRotation + maxHeadingChange) % 360;
 		rotationDirection = Random.Range(-1, 1) < 0 ? -1 : 1;
-		Debug.Log (rotationDirection);
+//		Debug.Log (rotationDirection);
 	}
 
 
