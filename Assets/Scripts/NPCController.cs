@@ -69,11 +69,6 @@ public class NPCController : MonoBehaviour {
 		}
 	}
 
-	void OnCollisionEnter(Collision other) {
-//		if (rb.velocity.y == 0) {
-//
-//		}
-	}
 
 
 
@@ -95,6 +90,10 @@ public class NPCController : MonoBehaviour {
 			}
 
 		}
+
+	}
+
+	void OnCollisionEnter(Collision other) {
 
 	}
 	

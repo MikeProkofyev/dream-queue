@@ -26,4 +26,14 @@ public class WeaponSwingController : MonoBehaviour {
 			timeLeft = swingDuration;
 		}
 	}
+
+
+	void OnControllerColliderHit(ControllerColliderHit hit) {
+		if (hit.gameObject.tag == "NPC") {
+			float new_z = Mathf.Clamp(GetComponent<Rigidbody>().velocity.z, -Mathf.Infinity, 0f);
+			Vector3 new_velocity = GetComponent<Rigidbody>().velocity;
+			new_velocity.z = new_z;
+			GetComponent<Rigidbody>().velocity =  new_velocity;
+		}
+	}
 }
