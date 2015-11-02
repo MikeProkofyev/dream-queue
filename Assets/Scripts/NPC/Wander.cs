@@ -11,7 +11,7 @@ public class Wander : MonoBehaviour {
 	public float directionChangeInterval = 1f;
 	public float speed = 5;
 	float maxHeadingChange = 360;
-	int rotationDirection = 1;
+//	int rotationDirection = 1;
 	float nextYRotation;
 	NavMeshAgent navAgent;
 
@@ -49,7 +49,7 @@ public class Wander : MonoBehaviour {
 
 	void NewHeadingRoutine () {
 		nextYRotation =  Random.Range(nextYRotation - maxHeadingChange, nextYRotation + maxHeadingChange) % 360;
-		rotationDirection = Random.Range(-1, 1) < 0 ? -1 : 1;
+//		rotationDirection = Random.Range(-1, 1) < 0 ? -1 : 1;
 //		Debug.Log (rotationDirection);
 	}
 
