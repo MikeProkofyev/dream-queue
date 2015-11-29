@@ -4,10 +4,11 @@ using System.Collections;
 public class WallMsgController : MonoBehaviour {
 
 	public TextMesh textMesh;
+	public TextMesh endTextMesh;
 	public bool finishedWriting = false;
 
-	string msg1 = "You are here because you are afraid";
-	string msg2 = "Otherwise, you wouldn't be\n HERE";
+	string msg1 = "You are in this simulation because you are afraid";
+	string msg2 = "Otherwise, you wouldn't be";
 
 	// Use this for initialization
 	void Start () {
@@ -29,6 +30,9 @@ public class WallMsgController : MonoBehaviour {
 		yield return new WaitForSeconds(2f);
 		textMesh.text="";
 		yield return StartCoroutine("UpdateMessage", msg2);
+		yield return new WaitForSeconds(.25f);
+		textMesh.text="";
+		endTextMesh.text = "HERE";
 		finishedWriting = true;
 	}
 
