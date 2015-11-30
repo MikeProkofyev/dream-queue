@@ -37,13 +37,13 @@ public class WellLogicController : MonoBehaviour {
 			if (MessageVisible(msg2ViewPoints)) {
 				Debug.Log("Well message 2 seen");
 				msg2TriggerActive = false;
-				Invoke("InitiateFall", 1f);
+				Invoke("InitiateFall", 2f);
 			}
 		}
 	}
 
 	void InitiateFall() {
-		wellLid.active = false;
+		wellLid.SetActive(false);
 	}
 
 	bool MessageVisible(Collider[] messagePoints) {
@@ -51,7 +51,6 @@ public class WellLogicController : MonoBehaviour {
 		cameraPlanes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
 		foreach (var vP in messagePoints) {
 			if (!GeometryUtility.TestPlanesAABB(cameraPlanes, vP.bounds)) {
-//									Debug.Log ("Not visible" + vP.gameObject.name);
 				return false;
 			}
 		}

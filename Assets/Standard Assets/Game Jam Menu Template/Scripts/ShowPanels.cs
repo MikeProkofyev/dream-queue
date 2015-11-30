@@ -7,7 +7,8 @@ public class ShowPanels : MonoBehaviour {
 	public GameObject optionsTint;							//Store a reference to the Game Object OptionsTint 
 	public GameObject menuPanel;							//Store a reference to the Game Object MenuPanel 
 	public GameObject pausePanel;							//Store a reference to the Game Object PausePanel 
-	public GameObject fullRealmPanel;
+	public GameObject creditsPanel;
+	public GameObject spaceMashPanel;
 
 
 	//Call this function to activate and display the Options panel during the main menu
@@ -51,13 +52,25 @@ public class ShowPanels : MonoBehaviour {
 
 	}
 
-	public void ShowFullRealmPanel()
+	public void ShowCreditsPanel()
 	{
-		fullRealmPanel.SetActive (true);
+		creditsPanel.SetActive (true);
+		optionsTint.SetActive(true);
 	}
 
-	public void HideFullRealmPanel()
+	public void HideCreditsPanel()
 	{
-		fullRealmPanel.SetActive (false);
+		creditsPanel.SetActive (false);
+		optionsTint.SetActive(false);
+	}
+
+	public void ShowSpaceMashPanel()
+	{
+		spaceMashPanel.SetActive (true);
+	}
+	
+	public void HideSpaceMashPanel()
+	{
+		spaceMashPanel.SetActive (false);
 	}
 }

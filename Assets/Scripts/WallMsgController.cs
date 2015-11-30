@@ -8,7 +8,7 @@ public class WallMsgController : MonoBehaviour {
 	public bool finishedWriting = false;
 
 	string msg1 = "You are in this simulation because you are afraid";
-	string msg2 = "Otherwise, you wouldn't be";
+	string msg2 = "Otherwise, you wouldn't log in";
 
 	// Use this for initialization
 	void Start () {
