@@ -34,7 +34,6 @@ public class MashSpaceController : MonoBehaviour {
 	}
 
 
-
 	Color RandomColor() {
 		return new Color(Random.value, Random.value, Random.value);
 	}

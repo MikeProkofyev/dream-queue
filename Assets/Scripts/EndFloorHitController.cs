@@ -3,13 +3,16 @@ using System.Collections;
 
 public class EndFloorHitController : MonoBehaviour {
 
-	public Material redMat;
 
-	private Renderer materialRenderer;
+	public MusicController musicController;
+//	public Material redMat;
+
+//	private Renderer materialRenderer;
 	private ShowPanels showPanelsController;
+	public UnityStandardAssets.Characters.FirstPerson.FirstPersonController fpsController;
 
 	void Awake() {
-		materialRenderer = GetComponent<Renderer>();
+//		materialRenderer = GetComponent<Renderer>();
 		showPanelsController = GameObject.FindGameObjectWithTag("UIManagerObject").GetComponent<ShowPanels>();
 	}
 
@@ -24,9 +27,11 @@ public class EndFloorHitController : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other) {
-		materialRenderer.material = redMat;
+//		materialRenderer.material = redMat;
 		showPanelsController.HideSpaceMashPanel();
-		Invoke ("LoadCredits", 2f);
+		fpsController.enabled = false;
+		musicController.stopPlayingMusic();
+		LoadCredits();
 	}
 
 	void LoadCredits() {

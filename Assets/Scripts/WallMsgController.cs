@@ -26,11 +26,13 @@ public class WallMsgController : MonoBehaviour {
 
 
 	IEnumerator TextMeshUpdates() {
+		//PLAYER CONTROLS
+		yield return new WaitForSeconds(1f);
 		yield return StartCoroutine("UpdateMessage", msg1);
 		yield return new WaitForSeconds(2f);
 		textMesh.text="";
 		yield return StartCoroutine("UpdateMessage", msg2);
-		yield return new WaitForSeconds(.25f);
+		yield return new WaitForSeconds(0.5f);
 		textMesh.text="";
 		endTextMesh.text = "HERE";
 		finishedWriting = true;

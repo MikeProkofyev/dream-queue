@@ -25,21 +25,34 @@ public class GameController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 //		musicController.playMainTheme();
+
+		//CURSOR HANDLING
+
+		Cursor.visible = false;
+		Cursor.lockState = CursorLockMode.Confined;
+
+
+
 		if (playStartSequence) {
 			//TEXT
 			messageController.StartUpdatingText();
 			//LIGHTS
 			oldCullingMask = playerCamera.cullingMask;
-			playerCamera.cullingMask = (1 << LayerMask.NameToLayer("StartUpVisible"));
+			MakePlayerBlind();
 			lightsController.DisableLightMaps();
-			//PLAYER CONTROLS
-			firstPersonController.enabled = false;
+			firstPersonController.disabledInput = true;
+
 		}
 
+	}
+
+	public void MakePlayerBlind () {
+		playerCamera.cullingMask = (1 << LayerMask.NameToLayer("StartUpVisible"));
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
 		///REMOVE, BAD THING, UPDATES EVERY TIME
 		if (messageController.finishedWriting) {
 			shouldGivePlayerControl = true;
@@ -50,7 +63,7 @@ public class GameController : MonoBehaviour {
 			playerCamera.cullingMask = oldCullingMask;
 			lightsController.EnableLightMaps();
 			//PLAYER CONTROLS
-			firstPersonController.enabled = true;
+			firstPersonController.disabledInput = false;
 			musicController.playMainTheme();
 			shouldGivePlayerControl = false;
 		}

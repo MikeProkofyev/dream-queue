@@ -6,10 +6,13 @@ public class WellLogicController : MonoBehaviour {
 
 	public Collider triggerCollider;
 	public Collider[] wallsColliders;
+	public GameObject[] objectsToTurnOff;
 	public Collider[] msg1ViewPoints;
 	public Collider[] msg2ViewPoints;
 	public GameObject wellLid;
-
+	public UnityStandardAssets.Characters.FirstPerson.FirstPersonController fpsController;
+	public GameObject secondMessage;
+	public MusicController musicController;
 
 	private Animator animatorController;
 	private bool msg1TriggerActive = false;
@@ -30,6 +33,7 @@ public class WellLogicController : MonoBehaviour {
 			if (MessageVisible(msg1ViewPoints)) {
 				msg1TriggerActive = false;
 				msg2TriggerActive = true;
+				secondMessage.SetActive(true);
 				Debug.Log("Well message 1 seen");
 			}
 		}
@@ -44,6 +48,8 @@ public class WellLogicController : MonoBehaviour {
 
 	void InitiateFall() {
 		wellLid.SetActive(false);
+		fpsController.falling = true;
+		musicController.playFallingTheme();
 	}
 
 	bool MessageVisible(Collider[] messagePoints) {
@@ -62,6 +68,9 @@ public class WellLogicController : MonoBehaviour {
 		triggerCollider.enabled = false;
 		foreach (var wallCollider in wallsColliders) {
 			wallCollider.enabled = true;
+		}
+		foreach (var badObj in objectsToTurnOff) {
+			badObj.SetActive(false);
 		}
 		msg1TriggerActive = true;
 
